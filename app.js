@@ -8,17 +8,14 @@ var displayedItems = [];
 //click counter - GOAL: 25 votes
 var clicks = 0;
 
-
-//DOM Manipulation Create, point
-var itemPic = document.getElementById('wrapper');
-
-//item Constructor - NEEDS: item name, filepath, number of times shown, number of times clicked, pID
-
+//item Constructor - NEEDS: item name, filepath, number of times shown, number of times clicked
 function Item(name, imgFilePath) {
   this.name = name;
-  this.imgfilepath = `img/${imgFilePath}`;
+  console.log('', 'img/' + imgFilePath);
+  this.imgFilePath = 'img/' + imgFilePath;
   this.displayCounter = 0;
   this.voteCounter = 0;
+  //Get into the global array
   allItems.push(this);
 }
 
@@ -45,3 +42,39 @@ new Item('unicorn', 'unicorn.jpg');
 new Item('usb', 'usb.gif');
 new Item('water-can', 'water-can.jpg');
 new Item('wine-glass', 'wine-glass.jpg');
+
+//DOM Manipulation anchor, create, do
+
+//show items
+function showItem(idOne, idTwo, idThree){
+  //anchor
+  let itemPicOne = document.getElementById('pic1');
+  let itemPicTwo = document.getElementById('pic2');
+  let itemPicThree = document.getElementById('pic3');
+
+  //This will be tripled to show 3 items?
+  allItems[idOne].displayCounter += 1;
+  allItems[idTwo].displayCounter += 1;
+  allItems[idThree].displayCounter += 1;
+
+  itemPicOne.alt = allItems[idOne].name;
+  itemPicTwo.alt = allItems[idTwo].name;
+  itemPicThree.alt = allItems[idThree].name;
+
+  itemPicOne.title = allItems[idOne].name;
+  itemPicTwo.title = allItems[idTwo].name;
+  itemPicThree.title = allItems[idThree].name;
+
+  itemPicOne.src = allItems[idOne].imgFilePath;
+  itemPicTwo.src = allItems[idTwo].imgFilePath;
+  itemPicThree.src = allItems[idThree].imgFilePath;
+
+  itemPicOne.value = idOne;
+  itemPicTwo.value = idTwo;
+  itemPicThree.value = idThree;
+}
+
+showItem(0,1,2);
+
+//this will need a pick random values tied in w/ checking for image redundancy
+
