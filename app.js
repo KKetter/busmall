@@ -77,7 +77,7 @@ function getRandomNumbers(){
   while (displayedItems.length < 3 ) {
     var randomNumber = Math.floor(Math.random() * allItems.length);
     //check if exists in array
-    if( !displayedItems.includes(randomNumber) ){
+    if( !displayedItems.includes(randomNumber) && !previousDisplay.includes(randomNumber) ){
       displayedItems.push(randomNumber);
     }
   }
@@ -91,9 +91,8 @@ showItem(displayedItems[0],displayedItems[1],displayedItems[2]);
 function handleVoteClick(event) {
   //DIAG
   //console.log('', event.target.title);
-  //CHANGE THIS TO 25 WOWEEZOWIE
   if (clicks < 5 ) {
-    console.log('', clicks);
+    console.log('', previousDisplay);
     for(let i = 0; i < allItems.length; i++){
       if((allItems[i]).name === event.target.alt){
         allItems[i].voteCounter++;
