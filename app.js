@@ -5,13 +5,14 @@
 var allItems = [];
 //contains objects currently displayed - GOAL: display 3
 var displayedItems = [];
+var previousDisplay = [];
+var votingZone = document.getElementById('votingZone');
 //click counter - GOAL: 25 votes
 var clicks = 0;
 
 //item Constructor - NEEDS: item name, filepath, number of times shown, number of times clicked
 function Item(name, imgFilePath) {
   this.name = name;
-  console.log('', 'img/' + imgFilePath);
   this.imgFilePath = 'img/' + imgFilePath;
   this.displayCounter = 0;
   this.voteCounter = 0;
@@ -43,16 +44,13 @@ new Item('usb', 'usb.gif');
 new Item('water-can', 'water-can.jpg');
 new Item('wine-glass', 'wine-glass.jpg');
 
-//DOM Manipulation anchor, create, do
-
 //show items
 function showItem(idOne, idTwo, idThree){
-  //anchor
+  //anchor to DOM - this is my failure to allow intake of array. rest can be looped easily?
   let itemPicOne = document.getElementById('pic1');
   let itemPicTwo = document.getElementById('pic2');
   let itemPicThree = document.getElementById('pic3');
 
-  //This will be tripled to show 3 items?
   allItems[idOne].displayCounter += 1;
   allItems[idTwo].displayCounter += 1;
   allItems[idThree].displayCounter += 1;
@@ -74,7 +72,48 @@ function showItem(idOne, idTwo, idThree){
   itemPicThree.value = idThree;
 }
 
-showItem(0,1,2);
+//pick a number, check if in array
+function getRandomNumbers(){
+  while (displayedItems.length < 3 ) {
+    var randomNumber = Math.floor(Math.random() * allItems.length);
+    //check if exists in array
+    if( !displayedItems.includes(randomNumber) ){
+      displayedItems.push(randomNumber);
+    }
+  }
+}
+//generate random numbers
+getRandomNumbers();
+//below will display 3 random images from indecies populated into the displayed Items array
+showItem(displayedItems[0],displayedItems[1],displayedItems[2]);
 
-//this will need a pick random values tied in w/ checking for image redundancy
+//target voting id section, return id
+function handleVoteClick(event) {
+  //DIAG
+  //console.log('', event.target.title);
+  //CHANGE THIS TO 25 WOWEEZOWIE
+  if (clicks < 5 ) {
+    console.log('', clicks);
+    for(let i = 0; i < allItems.length; i++){
+      if((allItems[i]).name === event.target.alt){
+        allItems[i].voteCounter++;
+      }
+      //DIAG
+      //console.log(allItems[i].name);
+    }
+    //display new images -> set displayed values to previous, clear displayed values
+    previousDisplay = displayedItems;
+    displayedItems = [];
+    //reassign randoms/display
+    getRandomNumbers();
+    showItem(displayedItems[0],displayedItems[1],displayedItems[2]);
+    //increment universal clicks
+    clicks++;
+    //when votes reached do this other thing - print chart js is probably good for now we have a console log
+  } else for (let index = 0; index < allItems.length; index++) {
+    console.log(allItems[index].name + ' total Votes', allItems[index].voteCounter);
+  }
+}
+votingZone.addEventListener('click', handleVoteClick);
+
 
