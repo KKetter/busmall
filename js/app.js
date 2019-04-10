@@ -120,7 +120,7 @@ function handleVoteClick(event) {
 }
 votingZone.addEventListener('click', handleVoteClick);
 
-//CHART EXPLORATORY ZONE***NOTHING BELOW THIS MATTERS YET
+//CHART creation
 function createChart() {
   chartDrawn = true;
   let arrayOfNames = [];
@@ -128,13 +128,13 @@ function createChart() {
   for (let index = 0; index < allItems.length; index++) {
     //name indexes to go into arrName
     arrayOfNames[index] = allItems[index].name;
-    //voteCounter indexies? to arrVote
+    //voteCounter indexies(?) to arrVote
     arrayOfVotes[index] = allItems[index].voteCounter;
   }
   console.log('', arrayOfNames);
   console.log('', arrayOfVotes);
   var ctx = document.getElementById('myChart').getContext('2d');
-  //ignore the line 121 errors
+  //eslint-disable-next-line no-undef, no-unused-vars
   var chart = new Chart(ctx, {
     // The type of chart we want to create
     type: 'bar',
@@ -157,4 +157,6 @@ function createChart() {
   });
 }
 
+
+//LOCAL STORAGE
 
