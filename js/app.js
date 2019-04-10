@@ -113,9 +113,7 @@ function handleVoteClick(event) {
     //when votes reached do this other thing - print chart js is probably good for now we have a console log
   } else {
     if (!chartDrawn) createChart();
-    for (let index = 0; index < allItems.length; index++) {
-      console.log(allItems[index].name + ' total Votes', allItems[index].voteCounter);
-    }
+    fillLocalStorage();
   }
 }
 votingZone.addEventListener('click', handleVoteClick);
@@ -131,8 +129,6 @@ function createChart() {
     //voteCounter indexies(?) to arrVote
     arrayOfVotes[index] = allItems[index].voteCounter;
   }
-  console.log('', arrayOfNames);
-  console.log('', arrayOfVotes);
   var ctx = document.getElementById('myChart').getContext('2d');
   //eslint-disable-next-line no-undef, no-unused-vars
   var chart = new Chart(ctx, {
@@ -158,5 +154,33 @@ function createChart() {
 }
 
 
-//LOCAL STORAGE
+//LOCAL STORAGE INTEGRATION
+//Use this somewhere - localStorage.clear();
+//store values AFTER 25 clicks - line 114 is actions once we break 25 clicks
+//create the array to hold ls values
+//put values in array - parse ints for storage?
+//
+// if (typeof(Storage) !== 'undefined'){
+//   //if ls exists retrieve & parse & assign
+//   for (let index = 0; index < voteValue.length; index++) {
+//     var voteValue = JSON.parse(localStorage.getItem('voteValue'));
+//   }
+// } else {
+// }
+//else instantiate product obj (into ls)
+function fillLocalStorage() {
+  localStorage.clear();
+  for (let index = 0; index < allItems.length; index++) {
+    localStorage.setItem(JSON.stringify(allItems[index].name), JSON.stringify(allItems[index].voteCounter));
+  }
+}
+
+function loadLocalStorage() {
+  //check for local storage
+  if (typeof (Storage) !== 'undefined') {
+    //
+    //object.values()
+  }
+}
+loadLocalStorage();
 
