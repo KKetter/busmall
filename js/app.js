@@ -176,11 +176,13 @@ function fillLocalStorage() {
 }
 
 function loadLocalStorage() {
+  var tempArray = [];
   //check for local storage
   if (typeof (Storage) !== 'undefined') {
-    //
-    //object.values()
+
+    for (let index = 0; index < allItems.length; index++) {
+      localStorage.getItem(allItems[index].name, tempArray);
+    }
   }
 }
 loadLocalStorage();
-
