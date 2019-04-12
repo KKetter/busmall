@@ -10,6 +10,7 @@ img:hover {
 }
 
 canvas {
+    display: block;
     height: 200px;
     width: 600px;
 }
@@ -22,7 +23,6 @@ h1{
     text-decoration: underline;
     text-transform: capitalize;
     margin-bottom: 10px;
-
 }
 
 #votingZone {
