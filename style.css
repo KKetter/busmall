@@ -1,15 +1,32 @@
 img {
-    width: 300px;
-    height: 300px;
-    border: 1px solid red;
+    width: 200px;
+    height: 200px;
+    border: 2px solid black;
+    
 }
 
+img:hover {
+    box-shadow: 0 5px 14px rgba(237, 48, 218);
+}
+/*
 body canvas {
-    border: 1px solid blue;
-    width: 1000px;
-    height: 500px;
+how do i get the chart to be smaller?
+}
+*/
+h1{
+    font-size: 30px;
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 800;
+    text-decoration: underline;
+    text-transform: capitalize;
+
 }
 
-h1{
-    text-align: center;
+#votingZone {
+    margin: 5px 20px 5px 400px
+}
+
+body {
+    background-color: #baddad;
 }
