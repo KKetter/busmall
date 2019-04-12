@@ -1,22 +1,19 @@
 'use strict';
 
 //Global Variables
-//contains all created  item objects
 var allItems = [];
-//contains objects currently displayed - GOAL: display 3
 var displayedItems = [];
 var previousDisplay = [];
 var votingZone = document.getElementById('votingZone');
-//click counter - GOAL: 25 votes
 var clicks = 0;
 var chartDrawn = false;
 
 //item Constructor - NEEDS: item name, filepath, number of times shown, number of times clicked
-function Item(name, imgFilePath) {
+function Item(name, imgFilePath, displayCounter = 0, voteCounter = 0) {
   this.name = name;
   this.imgFilePath = 'img/' + imgFilePath;
-  this.displayCounter = 0;
-  this.voteCounter = 0;
+  this.displayCounter = displayCounter;
+  this.voteCounter = voteCounter;
   //Get into the global array
   allItems.push(this);
 }
@@ -36,18 +33,16 @@ new Item('pen', 'pen.jpg');
 new Item('Pet-Sweep', 'pet-sweep.jpg');
 new Item('Scissors', 'scissors.jpg');
 new Item('Shark', 'shark.jpg');
-//different filepath for sweep
 new Item('Sweep', 'sweep.png');
 new Item('Tauntaun', 'tauntaun.jpg');
 new Item('Unicorn', 'unicorn.jpg');
-//different filepath for usb - this moves
 new Item('Usb', 'usb.gif');
 new Item('Water-can', 'water-can.jpg');
 new Item('Wine-glass', 'wine-glass.jpg');
 
 //show items
 function showItem(idOne, idTwo, idThree) {
-  //anchor to DOM - this is my failure to allow intake of array. rest can be looped easily?
+  //anchor
   let itemPicOne = document.getElementById('pic1');
   let itemPicTwo = document.getElementById('pic2');
   let itemPicThree = document.getElementById('pic3');
@@ -90,17 +85,11 @@ showItem(displayedItems[0], displayedItems[1], displayedItems[2]);
 
 //target voting id section, return id
 function handleVoteClick(event) {
-  //DIAG
-  //console.log('', event.target.title);
-  //change this to 25 plz
   if (clicks < 25) {
-    console.log('', previousDisplay);
     for (let i = 0; i < allItems.length; i++) {
       if ((allItems[i]).name === event.target.alt) {
         allItems[i].voteCounter++;
       }
-      //DIAG
-      //console.log(allItems[i].name);
     }
     //display new images -> set displayed values to previous, clear displayedItems array
     previousDisplay = displayedItems;
@@ -155,32 +144,28 @@ function createChart() {
 
 
 //LOCAL STORAGE INTEGRATION
-//Use this somewhere - localStorage.clear();
-//store values AFTER 25 clicks - line 114 is actions once we break 25 clicks
-//create the array to hold ls values
-//put values in array - parse ints for storage?
-//
-// if (typeof(Storage) !== 'undefined'){
-//   //if ls exists retrieve & parse & assign
-//   for (let index = 0; index < voteValue.length; index++) {
-//     var voteValue = JSON.parse(localStorage.getItem('voteValue'));
-//   }
-// } else {
-// }
-//else instantiate product obj (into ls)
 function fillLocalStorage() {
   localStorage.clear();
-  for (let index = 0; index < allItems.length; index++) {
-    localStorage.setItem(JSON.stringify(allItems[index].name), JSON.stringify(allItems[index].voteCounter));
-  }
+  console.log('clear');
+  localStorage.setItem('allItems', JSON.stringify(allItems));
 }
 
 function loadLocalStorage() {
-  //check for local storage
-  if (typeof (Storage) !== 'undefined') {
-    //
-    //object.values()
+  //check for local storage - syntax for getItem? I want all the items in LS but only need the values on line 174 - this doesnt work.
+  let checkLocal = JSON.parse(localStorage.getItem('allItems'));
+  if (checkLocal) {
+    //if local is present then
+    //clear allitems array in prep for new objects
+    allItems = [];
+    for (let index = 0; index < checkLocal.length; index++) {
+      //take the values from local storage, and push it into allItems
+      //how is a single value stored?
+      new Item(checkLocal[index].name, checkLocal[index].imgFilePath.split('/').pop(), checkLocal[index].displayCounter, checkLocal[index].voteCounter);
+
+    }
+  } else {
+    console.log('', 'wow');
   }
+  console.log('allItems', allItems);
 }
 loadLocalStorage();
-
