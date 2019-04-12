@@ -9,11 +9,11 @@ var clicks = 0;
 var chartDrawn = false;
 
 //item Constructor - NEEDS: item name, filepath, number of times shown, number of times clicked
-function Item(name, imgFilePath) {
+function Item(name, imgFilePath, displayCounter = 0, voteCounter = 0) {
   this.name = name;
   this.imgFilePath = 'img/' + imgFilePath;
-  this.displayCounter = 0;
-  this.voteCounter = 0;
+  this.displayCounter = displayCounter;
+  this.voteCounter = voteCounter;
   //Get into the global array
   allItems.push(this);
 }
@@ -86,7 +86,6 @@ showItem(displayedItems[0], displayedItems[1], displayedItems[2]);
 //target voting id section, return id
 function handleVoteClick(event) {
   if (clicks < 25) {
-    console.log('', previousDisplay);
     for (let i = 0; i < allItems.length; i++) {
       if ((allItems[i]).name === event.target.alt) {
         allItems[i].voteCounter++;
@@ -147,19 +146,26 @@ function createChart() {
 //LOCAL STORAGE INTEGRATION
 function fillLocalStorage() {
   localStorage.clear();
-  for (let index = 0; index < allItems.length; index++) {
-    localStorage.setItem(JSON.stringify(allItems[index].name), JSON.stringify(allItems[index].voteCounter));
-  }
+  console.log('clear');
+  localStorage.setItem('allItems', JSON.stringify(allItems));
 }
 
 function loadLocalStorage() {
-  //check for local storage - syntax for getItem? I want all the items in LS but only need the values on line 174
-  let checkLocal = JSON.parse(localStorage.getItem(allItems.name));
+  //check for local storage - syntax for getItem? I want all the items in LS but only need the values on line 174 - this doesnt work.
+  let checkLocal = JSON.parse(localStorage.getItem('allItems'));
   if (checkLocal) {
-    //if local is present then set allItems.names to checkLocal.voteCounter
-    allItems.name = checkLocal.voteCounter;
+    //if local is present then
+    //clear allitems array in prep for new objects
+    allItems = [];
+    for (let index = 0; index < checkLocal.length; index++) {
+      //take the values from local storage, and push it into allItems
+      //how is a single value stored?
+      new Item(checkLocal[index].name, checkLocal[index].imgFilePath.split('/').pop(), checkLocal[index].displayCounter, checkLocal[index].voteCounter);
+
+    }
   } else {
-    //populate items -- ??
+    console.log('', 'wow');
   }
+  console.log('allItems', allItems);
 }
 loadLocalStorage();

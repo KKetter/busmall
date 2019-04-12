@@ -8,11 +8,12 @@ img {
 img:hover {
     box-shadow: 0 5px 14px rgba(237, 48, 218);
 }
-/*
-body canvas {
-how do i get the chart to be smaller?
+
+canvas {
+    height: 200px;
+    width: 600px;
 }
-*/
+
 h1{
     font-size: 30px;
     text-align: center;
@@ -20,11 +21,12 @@ h1{
     font-weight: 800;
     text-decoration: underline;
     text-transform: capitalize;
+    margin-bottom: 10px;
 
 }
 
 #votingZone {
-    margin: 5px 20px 5px 400px
+    margin: 5px 20px 5px 300px
 }
 
 body {
